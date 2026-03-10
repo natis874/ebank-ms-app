@@ -1,5 +1,7 @@
 package org.tamyass.customerservice.services;
 
+import org.springaicommunity.mcp.annotation.McpTool;
+import org.springaicommunity.mcp.annotation.McpToolParam;
 import org.springframework.stereotype.Service;
 import org.tamyass.customerservice.entities.Customer;
 import org.tamyass.customerservice.repository.CustomerRepository;
@@ -14,13 +16,16 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
+    @McpTool(description = "Get All Customers")
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
     }
-    public Customer findCustomerById(Long id){
+    @McpTool(description = "Find a Customer by od")
+    public Customer findCustomerById(@McpToolParam(description = "The customer id") Long id){
         return customerRepository.findById(id).orElseThrow(()-> new RuntimeException("Customer Not Found "));
     }
-    public Customer saveCustomer(Customer customer){
+    @McpTool(description = "Save a new Customer")
+    public Customer saveCustomer(@McpToolParam(description = "The Customer to save(name,email)") Customer customer){
         return customerRepository.save(customer);
     }
 
